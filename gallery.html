@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ギャラリー | 午後の眠り</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* 簡単なモーダル＆レイアウトCSS例 */
+    .gallery-grid {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .gallery-item {
+      width: 200px;
+      cursor: pointer;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      transition: transform 0.3s ease;
+    }
+    .gallery-item:hover {
+      transform: scale(1.05);
+    }
+
+    /* モーダル */
+    #modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0; top: 0;
+      width: 100%; height: 100%;
+      background-color: rgba(0,0,0,0.8);
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+    #modalImg {
+      max-width: 90%;
+      max-height: 70vh;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #000;
+    }
+    #caption {
+      margin-top: 12px;
+      color: white;
+      font-size: 1.2rem;
+      text-align: center;
+    }
+    #sourceLink {
+      margin-top: 8px;
+      color: #00cfff;
+      text-decoration: underline;
+      font-size: 1rem;
+    }
+    #closeModal {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      font-size: 2.5rem;
+      color: white;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    /* 検索ボックス */
+    #searchCharacters {
+      margin: 20px auto;
+      display: block;
+      max-width: 300px;
+      padding: 8px;
+      font-size: 1rem;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+    }
+  </style>
+</head>
+<body>
+      <header class="main-header">
+        <a href="index.html" class="logo-link"> <div class="logo">午後の眠り</div> </a>
+        <button class="hamburger-menu" aria-label="メニューを開く">
+            <span class="line line-top"></span>
+            <span class="line line-middle"></span>
+            <span class="line line-bottom"></span>
+        </button>
+    </header>x
+    <nav class="side-menu">
+        <ul>
+            <li><a href="index.html">TOP</a></li>
+            <li><a href="characters.html">キャラクター</a></li>
+            <li><a href="diary.html">日記</a></li>
+            <li><a href="gallery.html">ギャラリー</a></li>
+            <li><a href="contact.html">連絡先</a></li>
+        </ul>
+    </nav>
+
+  <main class="gallery-main">
+    <h1>イラストギャラリー</h1>
+
+    <input
+      type="text"
+      id="searchCharacters"
+      placeholder="登場キャラクターを検索"
+      aria-label="登場キャラクターを検索"
+    />
+
+    <div class="gallery-grid" id="galleryGrid">
+      <img
+        src="gallery/kazetonare.jpeg"
+        alt="風となれ"
+        class="gallery-item"
+        data-source="https://youtu.be/OZBTUfn6kWk?si=h2cWf0rXgbiJ5OBl"
+        data-characters="かっち, ねむたろう"
+      />
+      <img
+        src="gallery/marbleHeart.jpeg"
+        alt="Marble Heart"
+        class="gallery-item"
+        data-source="https://youtu.be/REkIkvAfLdo?si=uhOFHHgbKvypJdMu"
+        data-characters="フェオン, 宝条セキ, ねむたろう, 星雲アマト, フィス"
+      />
+      <img
+        src="gallery/nousyou.jpeg"
+        alt="脳漿炸裂ガール"
+        class="gallery-item"
+        data-source="https://youtu.be/MvPusfuq19w?si=U2Ef48MBgUgpscoE"
+        data-characters="リコ"
+      />
+    </div>
+
+    <!-- モーダル -->
+    <div id="modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="caption" tabindex="-1">
+      <span id="closeModal" class="close" aria-label="閉じる">&times;</span>
+      <img class="modal-content" id="modalImg" alt="" />
+      <div id="caption"></div>
+      <a href="#" id="sourceLink" target="_blank" rel="noopener noreferrer">出典を見る</a>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>© 2025 かっち All rights reserved.</p>
+  </footer>
+
+  <script>
+
+    const modal = document.getElementById("modal");
+    const modalImg = document.getElementById("modalImg");
+    const captionText = document.getElementById("caption");
+    const sourceLink = document.getElementById("sourceLink");
+    const galleryItems = document.querySelectorAll(".gallery-item");
+    const closeModal = document.getElementById("closeModal");
+    const searchInput = document.getElementById("searchCharacters");
+
+    galleryItems.forEach(item => {
+      item.addEventListener("click", () => {
+        modal.style.display = "flex";
+        modalImg.src = item.src;
+        modalImg.alt = item.alt;
+        captionText.textContent = item.alt;
+        sourceLink.href = item.dataset.source;
+        sourceLink.textContent = "youtube";
+      });
+    });
+
+    closeModal.addEventListener("click", () => {
+      modal.style.display = "none";
+    });
+
+    modal.addEventListener("click", (e) => {
+      if (e.target === modal) {
+        modal.style.display = "none";
+      }
+    });
+
+    // キャラクター検索機能
+    searchInput.addEventListener("input", () => {
+      const query = searchInput.value.trim().toLowerCase();
+      galleryItems.forEach(item => {
+        const chars = item.dataset.characters.toLowerCase();
+        if (chars.includes(query)) {
+          item.style.display = "";
+        } else {
+          item.style.display = "none";
+        }
+      });
+    });
+  </script>
+
+  <script src="script.js"></script>
+</body>
+</html>
