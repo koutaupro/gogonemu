@@ -9,28 +9,28 @@
   <link rel="icon" type="image/png" href="image/favicon.png" sizes="32x32">
 </head>
 <body class="dark-mode">
-  <header class="main-header">
-      <a href="index.html" data-transition class="logo-link">
-          <span class="logo">午後の眠り</span>
-      </a>
+    <header class="main-header">
+        <a href="index.html" data-transition class="logo-link">
+            <span class="logo">午後の眠り</span>
+        </a>
 
-      <button class="hamburger-menu" aria-label="メニューを開く">
-          <span class="line line-top"></span>
-          <span class="line line-middle"></span>
-          <span class="line line-bottom"></span>
-      </button>
-  </header>
+        <button class="hamburger-menu" aria-label="メニューを開く">
+            <span class="line line-top"></span>
+            <span class="line line-middle"></span>
+            <span class="line line-bottom"></span>
+        </button>
+    </header>
 
-  <nav class="side-menu">
-      <ul>
-          <li><a href="index.html" data-transition>TOP</a></li>
-          <li><a href="characters.html" data-transition>キャラクター</a></li>
-          <li><a href="diary.html" data-transition>日記</a></li>
-          <li><a href="gallery.html" data-transition>ギャラリー</a></li>
-          <li><a href="rules.html" data-transition>利用規約</a></li>
-      </ul>
-  </nav>
 
+    <nav class="side-menu">
+        <ul>
+            <li><a href="index.html" data-transition>TOP</a></li>
+            <li><a href="characters.html" data-transition>キャラクター</a></li>
+            <li><a href="diary.html" data-transition>日記</a></li>
+            <li><a href="gallery.html" data-transition>ギャラリー</a></li>
+            <li><a href="rules.html" data-transition>利用規約</a></li>
+        </ul>
+    </nav>
   <div class="diary-container">
     <a href="#" id="back-button" class="back-button">← 戻る</a>
     <div id="entry-list" class="entry-list"></div>
@@ -62,56 +62,9 @@
     </div>
   </footer>
 
-  <script>
-    let entries = [];
-    let currentIndex = -1;
+  <!-- ここで外部JavaScriptファイル（script.js）を読み込んでいます -->
+  <script src="script.js"></script>
 
-    fetch("entries_dark.json")
-      .then((res) => res.json())
-      .then((data) => {
-        entries = data;
-        renderList();
-      });
-
-    function renderList() {
-      const container = document.getElementById("entry-list");
-      container.innerHTML = "";
-      entries.forEach((entry, index) => {
-        const box = document.createElement("div");
-        box.className = "entry-box";
-        box.textContent = entry.date;
-        box.addEventListener("click", () => showEntry(index));
-        container.appendChild(box);
-      });
-    }
-
-    function showEntry(index) {
-      currentIndex = index;
-      const entry = entries[index];
-      document.getElementById("entry-date").textContent = entry.date;
-      document.getElementById("entry-body").textContent = entry.content;
-      document.getElementById("entry-list").classList.add("hidden");
-      document.getElementById("entry-detail").classList.remove("hidden");
-    }
-
-    document.getElementById("prev-entry").addEventListener("click", () => {
-      if (currentIndex > 0) showEntry(currentIndex - 1);
-    });
-
-    document.getElementById("next-entry").addEventListener("click", () => {
-      if (currentIndex < entries.length - 1) showEntry(currentIndex + 1);
-    });
-
-    document.getElementById("back-button").addEventListener("click", () => {
-      const isDetailVisible = !document.getElementById("entry-detail").classList.contains("hidden");
-
-      if (isDetailVisible) {
-        document.getElementById("entry-detail").classList.add("hidden");
-        document.getElementById("entry-list").classList.remove("hidden");
-      } else {
-        window.location.href = "diary.html";
-      }
-    });
-  </script>
+  <script src="diary.js"></script>
 </body>
 </html>
