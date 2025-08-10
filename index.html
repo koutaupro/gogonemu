@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TOP | 午後の眠り</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" href="image/favicon.png" sizes="32x32">
+</head>
+
+
+<body>
+
+    <div id="transition-overlay" > </div>
+    <header class="main-header">
+        <a href="index.html" data-transition class="logo-link">
+            <span class="logo">午後の眠り</span>
+        </a>
+
+        <button class="hamburger-menu" aria-label="メニューを開く">
+            <span class="line line-top"></span>
+            <span class="line line-middle"></span>
+            <span class="line line-bottom"></span>
+        </button>
+    </header>
+
+
+    <nav class="side-menu">
+        <ul>
+            <li><a href="index.html" data-transition>TOP</a></li>
+            <li><a href="characters.html" data-transition>キャラクター</a></li>
+            <li><a href="diary.html" data-transition>日記</a></li>
+            <li><a href="gallery.html" data-transition>ギャラリー</a></li>
+            <li><a href="rules.html" data-transition>利用規約</a></li>
+        </ul>
+    </nav>
+
+    <main>
+
+ 
+        <section class="kv-section">
+            <div class="kv-overlay">
+                <h1 class="kv-title-main">午後の眠り</h1>
+                <p class="kv-subtitle">公太郎のUTAU音源配布サイトへようこそ</p>
+            </div>
+            <img src="image/キービジュアル.png" alt="キービジュアル" class="kv-image">
+        </section>
+
+        <section class="main-menu">
+            <h2>メニュー</h2>
+            <div class="menu-grid">
+                <a href="characters.html" data-transition class="menu-item">キャラクター</a>
+                <a href="diary.html" data-transition class="menu-item">日記</a>
+                <a href="gallery.html" data-transition class="menu-item">ギャラリー</a>
+                <a href="rules.html" data-transition class="menu-item">利用規約</a>
+            </div>
+        </section>
+
+        <div class="welcome-container">
+            <div class="welcome-inner">
+                <div id="welcomeText" class="welcome-text">わー、きてくれてありがとー！</div>
+                <img id="welcomeImg" src="gogotaro_w.png" alt="ウェルカムキャラ">
+            </div>
+        </div>
+
+
+        <!-- カレンダーここから -->
+        <section id="event-calendar">
+            <h2>今月のカレンダー</h2>
+            <div class="calendar-header">
+                <button id="prevMonth">&lt;</button>
+                <span id="calendarTitle">Loading...</span>
+                <button id="nextMonth">&gt;</button>
+            </div>
+            <table id="calendar">
+                <thead>
+                    <tr>
+                        <th>日</th>
+                        <th>月</th>
+                        <th>火</th>
+                        <th>水</th>
+                        <th>木</th>
+                        <th>金</th>
+                        <th>土</th>
+                    </tr>
+                </thead>
+                <tbody id="calendarBody">
+                    <!-- ここに日付が自動で入る -->
+                </tbody>
+            </table>
+        </section>
+
+
+
+<style>
+#event-calendar {
+  max-width: 600px;
+  margin: 2rem auto;
+  text-align: center;
+  font-family: inherit;
+  background: #f8f8f8;
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+.calendar-header button {
+  font-size: 1.2rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+#calendar {
+  width: 100%;
+  border-collapse: collapse;
+}
+#calendar th,
+#calendar td {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  vertical-align: top;
+  text-align: left;
+  font-size: 0.9rem;
+  width: 14.2%; /* 100% ÷ 7曜日分 */
+  height: 6rem; /* 高さを固定 */
+  word-break: break-word; /* 単語の途中でも改行 */
+  overflow-wrap: break-word; /* 長い単語も折り返す */
+  box-sizing: border-box;
+  position: relative;
+}
+
+.event {
+  font-size: 0.8rem;
+  margin-top: 0.2rem;
+  display: block;
+  color: #0077cc;
+  line-height: 1.2;
+  max-height: 3rem; /* 高さ制限 */
+  overflow: hidden; /* はみ出し非表示（必要なら） */
+  text-overflow: ellipsis; /* はみ出しに「…」を追加 */
+  white-space: normal; /* 折り返しを許可 */
+}
+.event:hover {
+  text-decoration: underline;
+}
+
+span.event {
+  color: #5d5656; /* 黒文字 */
+  text-decoration: none;
+}
+
+a.event {
+  color: #007BFF; /* 好きなリンク色に */
+  text-decoration: underline;
+}
+
+
+.today {
+  background-color: #ffe0e0;
+}
+</style>
+
+<script>
+const events = {
+    "2014-10-10": {
+        title: "ごごたろう爆誕",
+    },
+    "2024-11-23": {
+        title: "ごごねむ公開",
+        link: "characters.html" 
+    },
+    "2025-01-25": {
+        title: "リコ配布開始",
+        link: "riko.html"
+    },
+    "2025-02-22": {
+        title: "猫音こころ配布開始",
+        link: "kokoro.html"
+    },
+    "2025-3-26": {
+        title: "猫音こころ誕生日"
+    },
+    "2025-04-03": {
+        title: "茶園レオン配布開始",
+        link: "reon.html"
+    },
+    "2025-06-06": {
+        title: "ねむたろう誕生日",
+        link: "https://youtu.be/OZBTUfn6kWk?si=vCa0L1BmkGyhn_vd"
+    },
+    "2025-07-11": {
+        title: "ねむたろう配布開始",
+        link: "nemutaro.html"
+    },
+    "2025-08-08": {
+        title: "HP公開"
+    },
+    "2025-10-10": {
+        title: "ごごたろう12歳の誕生日"
+    },
+    "2025-11-11": {
+        title: "リコ誕生日"
+    }
+};
+
+let currentDate = new Date(2025, 7); // 8月（JSでは0始まり）
+
+function renderCalendar(date) {
+  const year = date.getFullYear();
+  const month = date.getMonth();
+  const firstDay = new Date(year, month, 1).getDay();
+  const lastDate = new Date(year, month + 1, 0).getDate();
+  const title = `${year}年${month + 1}月`;
+  document.getElementById("calendarTitle").textContent = title;
+
+  const tbody = document.getElementById("calendarBody");
+  tbody.innerHTML = "";
+
+  let row = document.createElement("tr");
+  for (let i = 0; i < firstDay; i++) {
+    row.appendChild(document.createElement("td"));
+  }
+
+  for (let day = 1; day <= lastDate; day++) {
+    const td = document.createElement("td");
+    td.textContent = day;
+    const key = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+    if (events[key]) {
+  if (events[key].link) {
+    const event = document.createElement("a");
+    event.textContent = events[key].title;
+    event.href = events[key].link;
+    event.className = "event";
+    event.target = "_blank";
+    td.appendChild(document.createElement("br"));
+    td.appendChild(event);
+  } else {
+    const event = document.createElement("span");
+    event.textContent = events[key].title;
+    event.className = "event";
+    td.appendChild(document.createElement("br"));
+    td.appendChild(event);
+  }
+}
+    row.appendChild(td);
+    if ((firstDay + day) % 7 === 0 || day === lastDate) {
+      tbody.appendChild(row);
+      row = document.createElement("tr");
+    }
+  }
+}
+
+document.getElementById("prevMonth").addEventListener("click", () => {
+  currentDate.setMonth(currentDate.getMonth() - 1);
+  renderCalendar(currentDate);
+});
+
+document.getElementById("nextMonth").addEventListener("click", () => {
+  currentDate.setMonth(currentDate.getMonth() + 1);
+  renderCalendar(currentDate);
+});
+
+renderCalendar(currentDate);
+</script>
+
+
+        <main class="main-content">
+            <div class="top-wrapper">
+                <section class="latest-videos">
+                    <h2>最新動画</h2>
+                    <div class="video-list">
+                        <iframe src="https://www.youtube.com/embed/OZBTUfn6kWk?si=5toVRW8HWgMTVvzI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                        <iframe src="https://www.youtube.com/embed/cPi0kJuUfhg?si=9EEOeYbiHgWETj1e" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                    </div>
+                </section>
+                <section class="update-log">
+                    <h2>更新履歴</h2>
+                    <ul>
+                        <li>2025/08/08　音源配布ページ公開</li>
+                    </ul>
+                </section>
+            </div>
+
+        <section class="friends-banner">
+            <h2>外部サイト</h2>
+            <div class="banner-list">
+                <a href="https://seirentoybox.jimdofree.com/" target="_blank" rel="noopener noreferrer">
+                    <img src="image/誠蓮セレンの玩具箱.png" alt="誠蓮セレンの玩具箱">
+                </a>
+                <a href="https://ureddot.wixsite.com/sonnahi" target="_blank" rel="noopener noreferrer">
+                    <img src="image/そんな日.avif" alt="そんな日">
+                </a>
+                <a href="https://wsotphihz.wixsite.com/wysite" target="_blank" rel="noopener noreferrer">
+                    <img src="image/わせおつぷ.avif" alt="わせおつぶ">
+                </a>
+                <a href="https://n2shirome.wixsite.com/gion-syou" target="_blank" rel="noopener noreferrer">
+                    <img src="image/祇音鐘HPバナー.jpg" alt="祇園鐘HP">
+                </a>
+                <a href="https://zsxcvhjnhh.wixsite.com/yukirakira" target="_blank" rel="noopener noreferrer">
+                    <img src="image/雪灯町バナー.png.avif" alt="​雪灯町">
+                </a>
+                <a href="https://kurukuru2suuzi.wixsite.com/kuzutokaze" target="_blank" rel="noopener noreferrer">
+                    <img src="image/バナー1.png" alt="​葛と風邪">
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <span class="footer-note">© 2025 koutarou All rights reserved.</span>
+        <div class="footer-links">
+            <a href="https://twitter.com/koutaupro" class="x-link" target="_blank">X</a>
+            <a href="https://youtube.com/@koutarouoo" class="youtube-link" target="_blank">YouTube</a>
+            <a href="https://nicovideo.jp/user/128840994" class="nicovideo-link" target="_blank">ニコニコ</a>
+            <a href="https://koutarouoo.booth.pm" class="booth-link" target="_blank">BOOTH</a>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
