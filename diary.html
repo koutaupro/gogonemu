@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>日記 | 午後の眠り</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" type="image/png" href="image/favicon.png" sizes="32x32">
+</head>
+<body>
+    <header class="main-header">
+        <a href="index.html" data-transition class="logo-link">
+            <span class="logo">午後の眠り</span>
+        </a>
+
+        <button class="hamburger-menu" aria-label="メニューを開く">
+            <span class="line line-top"></span>
+            <span class="line line-middle"></span>
+            <span class="line line-bottom"></span>
+        </button>
+    </header>
+
+
+    <nav class="side-menu">
+        <ul>
+            <li><a href="index.html" data-transition>TOP</a></li>
+            <li><a href="characters.html" data-transition>キャラクター</a></li>
+            <li><a href="diary.html" data-transition>日記</a></li>
+            <li><a href="gallery.html" data-transition>ギャラリー</a></li>
+            <li><a href="rules.html" data-transition>利用規約</a></li>
+        </ul>
+    </nav>
+
+  <main class="diary-main">
+    
+    <h1>日記帳</h1>
+    <div class="diary-list">
+      </div>
+
+
+     <div id="passwordOverlay" class="overlay-dark">
+        <div class="popup-dark">
+            <button class="close-btn-dark" id="closePasswordPopup">×</button>
+            <h2>パスワードを入力してください</h2>
+            <input type="text" id="passwordInput" placeholder="4桁のパスワード" maxlength="4">
+            <br>
+            <button id="checkPassword">送信</button>
+            <p id="errorText" class="error-message" style="display: none;">パスワードが違います</p>
+        </div>
+    </div>
+</main>
+
+  <script src="script.js"></script>
+
+<footer>
+    <span class="footer-note">© 2025 koutarou All rights reserved.</span>
+    <div class="footer-links">
+      <a href="https://twitter.com/koutaupro" class="x-link" target="_blank">X</a>
+      <a href="https://youtube.com/@koutarouoo" class="youtube-link" target="_blank">YouTube</a>
+      <a href="https://nicovideo.jp/user/128840994" class="nicovideo-link" target="_blank">ニコニコ</a>
+      <a href="https://koutarouoo.booth.pm" class="booth-link" target="_blank">BOOTH</a>
+    </div>
+  </footer>
+
+<div id="transition-overlay" ></div>
+
+</body>
+</html>

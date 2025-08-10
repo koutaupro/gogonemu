@@ -1,0 +1,142 @@
+body {
+  margin: 0;
+  font-family: 'HuiFont', sans-serif;
+  padding-top: 60px;
+  background-image: url('image/noise.png');
+  background-color: #e0dcd8;
+  background-repeat: repeat;
+  background-size: auto;
+  padding: 40px 10px;
+  color: #333;
+
+  /* ↓ここ消す */
+  /* display: flex;
+  justify-content: center; */
+}
+
+
+
+@font-face {
+  font-family: 'HuiFont';
+  src: url('fonts/HuiFontP29.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+.diary-container {
+  max-width: 600px;
+  width: 100%;
+  text-align: center;
+  margin: 0 auto; /* ←中央寄せ */
+}
+
+.back-button {
+  display: inline-block;
+  margin-bottom: 20px;
+  margin-top: 20px;
+  color: #555;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.entry-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.entry-box {
+  background: #fff;
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  margin: 0px auto;
+  cursor: pointer;
+  transition: transform 0.2s;
+  font-size: 20px;
+}
+
+.entry-box:hover {
+  transform: scale(1.03);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+}
+
+.entry-detail {
+  background: #fff;
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  margin-top: 20px;
+  max-width: 400px;  /* お好みで調整（例：400〜600px） */
+  width: 80%;        /* 画面に対しての割合、スマホでも崩れにくく */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.hidden {
+  display: none;
+}
+
+.nav-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.nav-buttons button {
+  background: #f0f0f0;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.nav-buttons button:hover {
+  background: #e0e0e0;
+}
+
+footer {
+  padding: 20px;
+  text-align: center;
+  background-color: #f0f0f0;
+  margin-top: 30px;
+}
+
+/* 「© 2025 kacchi〜」は元のフォントのまま */
+.footer-note {
+  font-family: sans-serif; /* 必要に応じてサイトの標準フォントに変更してね */
+  margin-bottom: 10px;
+  display: block;
+}
+
+
+/* リンク訪問後も色を変えない */
+.footer-links a:visited {
+  color: inherit;
+}
+
+/* リンク共通設定 */
+.footer-links a {
+  text-decoration: underline;
+  font-family: "HuiFont", sans-serif;
+  margin: 0 10px;
+}
+
+/* 各リンクの色指定 */
+.footer-links a.x-link {
+  color: #1DA1F2;
+}
+
+.footer-links a.youtube-link {
+  color: #FF0000;
+}
+
+.footer-links a.nicovideo-link {
+  color: #888888;
+}
+
+.footer-links a.booth-link {
+  color: #FF8080;
+}
