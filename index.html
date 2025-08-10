@@ -309,6 +309,71 @@ renderCalendar(currentDate);
                 </a>
             </div>
         </section>
+    
+    <style>
+        .banner-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            padding: 20px;
+            border: 2px solid #ccc; /* 枠線 */
+            border-radius: 12px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            text-align: center;
+        }
+
+        .banner-text {
+            font-size: 1rem;
+            line-height: 1.6;
+            margin: 0;
+            color: #555;
+        }
+
+        .banner-link {
+            display: inline-block;
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .banner-link:hover {
+            transform: scale(1.05); /* ホバーで少し拡大 */
+        }
+
+        .banner-link img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px; /* 角丸 */
+            border: 1px solid #ddd; /* 画像の枠線 */
+        }
+
+        /* レスポンシブ対応 */
+        @media (max-width: 600px) {
+            .banner-container {
+                padding: 15px;
+            }
+            .banner-text {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="banner-container">
+        <!-- バナー画像へのリンク -->
+        <a href="https://drive.google.com/file/d/1aTVOi-fMxcSMESqMctByPWD_FdVV4aYj/view?usp=sharing" target="_blank" class="banner-link">
+            <img src="image/午後の眠り_バナー.png" alt="サイトのバナー">
+        </a>
+        <p class="banner-text">
+            合成音声に関連するサイトを運営している方へ<br>
+            このバナーはご自由にお使いください！
+            <br>
+            バナーをクリックするとGoogleドライブに飛びます。
+        </p>
+    </div>
+
     </main>
 
     <footer>
