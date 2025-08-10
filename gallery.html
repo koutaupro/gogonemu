@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ギャラリー | 午後の眠り</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" type="image/png" href="image/favicon.png" sizes="32x32">
+  <style>
+    /* 簡単なモーダル＆レイアウトCSS例 */
+    .gallery-grid {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .gallery-item {
+      width: 200px;
+      cursor: pointer;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      transition: transform 0.3s ease;
+    }
+    .gallery-item:hover {
+      transform: scale(1.05);
+    }
+
+    /* モーダル */
+    #modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0; top: 0;
+      width: 100%; height: 100%;
+      background-color: rgba(0,0,0,0.8);
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+    #modalImg {
+      max-width: 90%;
+      max-height: 70vh;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #000;
+    }
+    #caption {
+      margin-top: 12px;
+      color: white;
+      font-size: 1.2rem;
+      text-align: center;
+    }
+    #sourceLink {
+      margin-top: 8px;
+      color: #00cfff;
+      text-decoration: underline;
+      font-size: 1rem;
+    }
+    #closeModal {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      font-size: 2.5rem;
+      color: white;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    /* 検索ボックス */
+    #searchCharacters {
+      margin: 20px auto;
+      display: block;
+      max-width: 300px;
+      padding: 8px;
+      font-size: 1rem;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+    }
+  </style>
+</head>
+<body>
+    <div id="transition-overlay" > </div>
+    <header class="main-header">
+        <a href="index.html" data-transition class="logo-link">
+            <span class="logo">午後の眠り</span>
+        </a>
+
+        <button class="hamburger-menu" aria-label="メニューを開く">
+            <span class="line line-top"></span>
+            <span class="line line-middle"></span>
+            <span class="line line-bottom"></span>
+        </button>
+    </header>
+
+      <nav class="side-menu">
+        <ul>
+          <li><a href="index.html" data-transition>TOP</a></li>
+          <li><a href="characters.html" data-transition>キャラクター</a></li>
+          <li><a href="diary.html" data-transition>日記</a></li>
+          <li><a href="gallery.html" data-transition>ギャラリー</a></li>
+          <li><a href="rules.html" data-transition>利用規約</a></li>  
+        </ul>
+      </nav>
+
+  <main class="gallery-main">
+    <h1>イラストギャラリー</h1>
+
+    <input
+      type="text"
+      id="searchCharacters"
+      placeholder="登場キャラクターを検索"
+      aria-label="登場キャラクターを検索"
+    />
+
+
+    
+    <div class="gallery-grid" id="galleryGrid">
+        <img
+        src="gallery/huro-raito.PNG"
+        alt="Fluorite"
+        class="gallery-item"
+        data-source="https://www.nicovideo.jp/watch/sm45141760"
+        data-characters="公太郎, ねむたろう"
+        />
+        <img
+        src="gallery/rettoujoutou.JPG"
+        alt="劣等上等"
+        class="gallery-item"
+        data-source="https://utaloader.net/music/20250614101930079440"
+        data-characters="ごごたろう, ねむたろう"
+        />
+        <img
+        src="gallery/yukidokeni.png"
+        alt="雪解けに"
+        class="gallery-item"
+       data-source="https://utaloader.net/music/20250614144732363865"
+        data-characters="ごごたろう, 星雲アマト, フィス"
+        />
+      <img
+        src="gallery/kazetonare6.PNG"
+        alt="風となれ動画用イラスト5"
+        class="gallery-item"
+        data-source="https://youtu.be/OZBTUfn6kWk?si=h2cWf0rXgbiJ5OBl"
+        data-characters="ねむたろう, ごごたろう"
+      />
+      <img
+        src="gallery/kazetonare5.PNG"
+        alt="風となれ動画用イラスト4"
+        class="gallery-item"
+        data-source="https://youtu.be/OZBTUfn6kWk?si=h2cWf0rXgbiJ5OBl"
+        data-characters="ごごたろう"
+      />
+      <img
+        src="gallery/kazetonare4.PNG"
+        alt="風となれ動画用イラスト3"
+        class="gallery-item"
+        data-source="https://youtu.be/OZBTUfn6kWk?si=h2cWf0rXgbiJ5OBl"
+        data-characters="ごごたろう"
+      />
+      <img
+        src="gallery/kazetonare3.PNG"
+        alt="風となれ動画用イラスト2"
+        class="gallery-item"
+        data-source="https://youtu.be/OZBTUfn6kWk?si=h2cWf0rXgbiJ5OBl"
+        data-characters="ねむたろう"
+      />
+      <img
+        src="gallery/kazetonare2.PNG"
+        alt="風となれ動画用イラスト1"
+        class="gallery-item"
+        data-source="https://youtu.be/OZBTUfn6kWk?si=h2cWf0rXgbiJ5OBl"
+        data-characters="ねむたろう"
+      />
+      <img
+        src="gallery/kazetonare.jpeg"
+        alt="風となれ"
+        class="gallery-item"
+        data-source="https://youtu.be/OZBTUfn6kWk?si=h2cWf0rXgbiJ5OBl"
+        data-characters="ねむたろう"
+      />
+      <img
+        src="gallery/junbi.PNG"
+        alt="ねむたろうお誕生日会の準備"
+        class="gallery-item"
+        data-characters="ごごたろう, 茶園レオン, リコ, 猫音こころ"
+      />
+      <img
+        src="gallery/bokarokorosiamu.png"
+        alt="ぼかろころしあむ"
+        class="gallery-item"
+        data-source="https://youtu.be/dH_zmLXXdGk?si=u8yXz728j0oeUw8e"
+        data-characters="茶園レオン"
+      />
+      <img
+        src="gallery/marbleHeart.jpeg"
+        alt="Marble Heart"
+        class="gallery-item"
+        data-source="https://youtu.be/REkIkvAfLdo?si=uhOFHHgbKvypJdMu"
+        data-characters="フェオン, 宝条セキ, ねむたろう, 星雲アマト, フィス"
+      />
+      <img
+        src="gallery/dokuhaku.JPG"
+        alt="ドクハク"
+        class="gallery-item"
+        data-source="https://youtu.be/0ADJfZ5KHDk?si=rnZLaY5Li5rv08vE"
+        data-characters="エノク, ねむたろう"
+      />
+      <img
+        src="gallery/ponpon.JPG"
+        alt="ぴんくのぽんぽんをなくしたゆめをみた"
+        class="gallery-item"
+        data-source="https://youtu.be/vUzSW4CWYTo?si=ug2ydp9DW1voftcT"
+        data-characters="猫音こころ"
+      />
+      <img
+        src="gallery/kotonoha.PNG"
+        alt="忘れじの言の葉"
+        class="gallery-item"
+        data-source="https://utaloader.net/music/20250326080405862010"
+        data-characters="叶木根太郎, ねむたろう"
+      />
+      <img
+        src="gallery/15DL.JPG"
+        alt="15DLありがとう!"
+        class="gallery-item"
+        data-characters="ごごたろう, ねむたろう"
+      />
+      <img
+        src="gallery/v_2.JPG"
+        alt="バレンタイン2"
+        class="gallery-item"
+        data-characters="ごごたろう,フィス"
+      />
+      <img
+        src="gallery/v_1.JPG"
+        alt="バレンタイン1"
+        class="gallery-item"
+        data-characters="ごごたろう"
+      />
+      <img
+        src="gallery/happy.PNG"
+        alt="ハッピーミルフィーユ"
+        class="gallery-item"
+        data-source="https://www.youtube.com/embed/ieaH5GIRRJw?si=c3rehBMseIXmkbHp"
+        data-characters="ごごたろう, 星雲アマト, フィス"
+      />
+      <img
+        src="gallery/bosuki-.PNG"
+        alt="ここがぼすきーか..."
+        class="gallery-item"
+        data-characters="ごごたろう"
+      />
+      <img
+        src="gallery/nousyou.jpeg"
+        alt="脳漿炸裂ガール"
+        class="gallery-item"
+        data-source="https://youtu.be/MvPusfuq19w?si=U2Ef48MBgUgpscoE"
+        data-characters="リコ"
+      />
+      <img
+        src="gallery/onigiri.PNG"
+        alt="おにぎりごごたろう"
+        class="gallery-item"
+        data-characters="ごごたろう"
+      />
+      <img
+        src="gallery/header.PNG"
+        alt="ヘッダー用イラスト"
+        class="gallery-item"
+        data-characters="ごごたろう, ねむたろう"
+      />
+      <img
+        src="gallery/kurasi.JPG"
+        alt="暮らしガスメータ"
+        class="gallery-item"
+        data-characters="ごごたろう, ねむたろう"
+      />
+      <img
+        src="gallery/uminaosi.JPG"
+        alt="うみなおし"
+        class="gallery-item"
+        data-characters="ごごたろう"
+      />
+      <img
+        src="gallery/hutaribosi.JPG"
+        alt="フタリボシ"
+        class="gallery-item"
+        data-characters="ごごたろう, ねむたろう"
+      />
+      <img
+        src="gallery/nasakenai.JPG"
+        alt="しんでしまうとはなさけない!"
+        class="gallery-item"
+        data-characters="ごごたろう, ねむたろう"
+      />
+      <img
+        src="gallery/nemuebi.PNG"
+        alt="えびを揉むねむたろう"
+        class="gallery-item"
+        data-characters="ねむたろう"
+      />
+      <img
+        src="gallery/gogoebi.PNG"
+        alt="えびを揉むごごたろう"
+        class="gallery-item"
+        data-characters="ごごたろう"
+      />
+      <img
+        src="gallery/syoki.JPG"
+        alt="初期案3"
+        class="gallery-item"
+        data-characters="ごごたろう, ねむたろう"
+      />
+      <img
+        src="gallery/syokinemu.JPG"
+        alt="初期案2"
+        class="gallery-item"
+        data-characters="ねむたろう"
+      />
+      <img
+        src="gallery/syokigogo.JPG"
+        alt="初期案1"
+        class="gallery-item"
+        data-characters="ごごたろう"
+      />
+    </div>
+
+    
+    <!-- モーダル -->
+    <div id="modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="caption" tabindex="-1">
+      <span id="closeModal" class="close" aria-label="閉じる">&times;</span>
+      <img class="modal-content" id="modalImg" alt="" />
+      <div id="caption"></div>
+      <a href="#" id="sourceLink" target="_blank" rel="noopener noreferrer">出典を見る</a>
+      <!-- ← → 矢印 -->
+      <span id="prevArrow" class="modal-arrow">&#10094;</span>
+      <span id="nextArrow" class="modal-arrow">&#10095;</span>
+    </div>
+
+  </main>
+
+    <footer>
+        <span class="footer-note">© 2025 koutarou All rights reserved.</span>
+        <div class="footer-links">
+            <a href="https://twitter.com/koutaupro" class="x-link" target="_blank">X</a>
+            <a href="https://youtube.com/@koutarouoo" class="youtube-link" target="_blank">YouTube</a>
+            <a href="https://nicovideo.jp/user/128840994" class="nicovideo-link" target="_blank">ニコニコ</a>
+            <a href="https://koutarouoo.booth.pm" class="booth-link" target="_blank">BOOTH</a>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+
+  <div id="transition-overlay" ></div>
+
+</body>
+</html>
