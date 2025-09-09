@@ -129,6 +129,7 @@ footer {
   color: #3a63b4;
 }
 
+
 /* ヘッダーのスタイル */
 .main-header {
     background-color: #000000;
@@ -1195,6 +1196,56 @@ body.fade-out {
 
 .banner-list a img:hover {
   transform: scale(1.05);
+}
+
+/* 中央揃え */
+.contact-main {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  text-align: center;
+}
+
+/* リンク訪問後も色を変えない */
+.contact-links a:visited {
+  color: inherit;
+}
+
+/* リンク共通設定 */
+.contact-links a {
+  text-decoration: underline;
+  font-family: "HuiFont", sans-serif;
+  margin: 0 10px;
+}
+
+/* 各リンクの色指定 */
+.contact-links a.x-link {
+  color: #1DA1F2;
+}
+
+.contact-links a.youtube-link {
+  color: #FF0000;
+}
+
+.contact-links a.nicovideo-link {
+  color: #888888;
+}
+
+.contact-links a.booth-link {
+  color: #FF8080;
+}
+
+.contact-links a.utaloader-link {
+  color: #3a63b4;
+}
+
+.contact-main a.mail-link {
+  color: #000000;
+  text-decoration: none;
+  border-bottom: 1px solid #000000; 
+  padding-bottom: 0.2em; 
+  margin-bottom: -1px; 
+  display: inline-block; 
 }
 
 /* 中央揃え */
