@@ -1,43 +1,23 @@
 let entries = [];
 let currentIndex = -1;
 
-// async/awaitとPromise.allを使ってlightとdark両方のJSONファイルを読み込む関数
-async function loadDiaryEntries() {
-  const lightFile = "entries_light.json";
-  const darkFile = "entries_dark.json";
-
-  try {
-    // 2つのfetchを同時に実行
-    const [lightRes, darkRes] = await Promise.all([
-      fetch(lightFile),
-      fetch(darkFile)
-    ]);
-    
-    // エラーハンドリング
-    if (!lightRes.ok) throw new Error(`Failed to fetch ${lightFile}`);
-    if (!darkRes.ok) throw new Error(`Failed to fetch ${darkFile}`);
-    
-    // JSONとしてパース
-    const lightEntries = await lightRes.json();
-    const darkEntries = await darkRes.json();
-
-    // 両方のデータをマージし、1つの配列にまとめる
-    entries = [...lightEntries, ...darkEntries];
-    
-    // 日記一覧をレンダリング
+// JSONファイルをフェッチ
+fetch("entries_light.json")
+  .then((res) => {
+    if (!res.ok) {
+      throw new Error(`Failed to fetch entries_light.json: ${res.status} ${res.statusText}`);
+    }
+    return res.json();
+  })
+  .then((data) => {
+    entries = data;
     renderList();
-
-  } catch (error) {
-    console.error("Error loading diary entries:", error);
-  }
-}
-
-// ページロード時に読み込み開始
-loadDiaryEntries();
+  })
+  .catch((error) => console.error("Error loading diary entries:", error));
 
 function renderList() {
   const container = document.getElementById("entry-list");
-  if (!container) return; // コンテナが存在しない場合は何もしない
+  if (!container) return; 
   
   container.innerHTML = "";
   entries.forEach((entry, index) => {
@@ -54,6 +34,15 @@ function showEntry(index) {
   const entry = entries[index];
   document.getElementById("entry-date").textContent = entry.date;
   document.getElementById("entry-body").textContent = entry.content;
+  
+  const entryImage = document.getElementById("entry-image");
+  if (entryImage && entry.image) {
+    entryImage.src = entry.image;
+    entryImage.style.display = 'block';
+  } else if (entryImage) {
+    entryImage.style.display = 'none';
+  }
+
   document.getElementById("entry-list").classList.add("hidden");
   document.getElementById("entry-detail").classList.remove("hidden");
 }
@@ -70,11 +59,9 @@ document.getElementById("back-button")?.addEventListener("click", () => {
   const isDetailVisible = !document.getElementById("entry-detail").classList.contains("hidden");
 
   if (isDetailVisible) {
-    // 本文表示中なら → 一覧に戻る
     document.getElementById("entry-detail").classList.add("hidden");
     document.getElementById("entry-list").classList.remove("hidden");
   } else {
-    // 一覧表示中なら → 日記選択（diary.html）へ戻る
     window.location.href = "diary.html";
   }
 });
