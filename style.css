@@ -780,6 +780,36 @@ body.○○○○ .download h2 {
 .back-to-list:hover {
   background: #ddd;
 }
+/* 💡 追加: 画像切り替えボタンのスタイル */
+
+/* 画像切り替えボタンのコンテナ */
+.image-nav-buttons {
+  position: absolute; 
+  top: 50%;
+  left: 0;
+  right: 0;
+  transform: translateY(-50%);
+  display: flex;
+  justify-content: space-between; /* 左右端にボタンを配置 */
+  padding: 0 10px; 
+  pointer-events: none; /* ボタン以外の場所でマウスイベントを透過させる */
+}
+
+/* ボタン自体のスタイル */
+.image-nav-buttons button {
+  background-color: rgba(0, 0, 0, 0.4); /* 半透明の黒背景 */
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+  border-radius: 50%; /* 丸いボタン */
+  font-size: 1.2rem;
+  font-weight: bold;
+  opacity: 0.7; /* 通常時の透明度 */
+  transition: opacity 0.2s, background-color 0.2s;
+  z-index: 10;
+  pointer-events: auto; /* ボタン上ではマウスイベントを有効に戻す */
+}
 
 
 /* 画面全体を覆う薄い白のオーバーレイ */
