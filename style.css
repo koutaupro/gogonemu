@@ -473,6 +473,11 @@ main h1 {
   text-align: center;
 }
 
+/* 💡 修正: position: relative;を追加してボタンの配置基準にする */
+.character-image-wrapper {
+  position: relative;
+}
+
 .character-image-wrapper img {
   width: 100%;
   max-width: 400px;
@@ -519,11 +524,15 @@ main h1 {
 .rico-s {
   color: #766197;
 }
+.koharu-s {
+  color: #b68f34;
+}
 
 /* 各情報ブロック（プロフィールなど） */
 .profile,
 .voice-info,
 .sample-audio,
+.jam_link,
 .download {
   background-color: #fff;
   padding: 1.5rem;
@@ -535,6 +544,7 @@ main h1 {
 .profile h2,
 .voice-info h2,
 .sample-audio h2,
+.jam_link h2,
 .download h2 {
   font-size: 1.2rem;
   margin-bottom: 0.5rem;
@@ -608,8 +618,7 @@ main h1 {
   .character-name {
     text-align: center;
   }
-
-  /* ▼▼ キャラクター別カラー設定 ▼▼ */
+ /* ▼▼ キャラクター別カラー設定 ▼▼ */
 
 /* 猫音こころ（パステルパープル系） */
 body.kokoro .first-letter {
@@ -650,6 +659,17 @@ body.nemutaro .voice-info h2,
 body.nemutaro .sample-audio h2,
 body.nemutaro .download h2 {
   border-left-color: #5ad0c6;
+}
+
+body.koharu .first-letter {
+  color: #b68f34;
+}
+body.koharu .profile h2,
+body.koharu .voice-info h2,
+body.koharu .sample-audio h2,
+body.koharu .jam_link h2,
+body.koharu .download h2 {
+  border-left-color: #e9b53b;
 }
 
 /* ほかのキャラ用のテンプレ
@@ -780,6 +800,7 @@ body.○○○○ .download h2 {
 .back-to-list:hover {
   background: #ddd;
 }
+
 /* 💡 追加: 画像切り替えボタンのスタイル */
 
 /* 画像切り替えボタンのコンテナ */
@@ -811,7 +832,10 @@ body.○○○○ .download h2 {
   pointer-events: auto; /* ボタン上ではマウスイベントを有効に戻す */
 }
 
-
+.image-nav-buttons button:hover {
+  opacity: 1; /* ホバーで不透明に */
+  background-color: rgba(0, 0, 0, 0.6);
+}
 /* 画面全体を覆う薄い白のオーバーレイ */
 .overlay {
   position: fixed;
