@@ -60,6 +60,10 @@ document.addEventListener("DOMContentLoaded", function () {
         normal: ["あっ、こ、こんにちはっ！？", "わ、き、きてくれたんですね...！"],
         clicked: ["わっ、ど、どうされました！？", "あ、あわ、私に触っても面白くないですよっ"],
       },
+      koharu: {
+        normal: ["...用が済んだらさっさと帰ってよね", "あー、いらっしゃい。さっさと用事済ませてよ"],
+        clicked: ["ななな、何！？はやくどっかいって！", "か、勝手に触るとかほんとデリカシーない！"],
+      },
     };
 
     const images = {
@@ -82,6 +86,10 @@ document.addEventListener("DOMContentLoaded", function () {
       kokoro: {
         normal: "image/kokoro_w.png",
         clicked: "image/kokoro_click.png",
+      },
+      koharu: {
+        normal: "image/koharu_w.png",
+        clicked: "image/koharu_w.png",
       },
     };
 
@@ -347,3 +355,76 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 }); // ★DOMContentLoaded の閉じ括弧はここが最後！
+
+document.addEventListener('DOMContentLoaded', () => {
+    // 💡 追記: キャラクター画像切り替え機能
+    const characterImage = document.getElementById('character-image');
+    const prevButton = document.getElementById('prev-image');
+    const nextButton = document.getElementById('next-image');
+    const imagePathsElement = document.getElementById('image-paths');
+
+    if (characterImage && prevButton && nextButton && imagePathsElement) {
+        // data-paths属性から画像パスの配列を取得
+        let imagePaths;
+        try {
+            imagePaths = JSON.parse(imagePathsElement.dataset.paths);
+        } catch (e) {
+            console.error('画像パスのパースに失敗しました:', e);
+            imagePaths = [];
+        }
+
+        // 画像が1枚以下の場合はボタンを非表示にする
+        if (imagePaths.length <= 1) {
+            prevButton.style.display = 'none';
+            nextButton.style.display = 'none';
+            return;
+        }
+
+        let currentIndex = 0; // 現在表示されている画像のインデックス（0からスタート）
+
+        // 画像を切り替える関数
+        function changeImage(newIndex) {
+            // インデックスが配列の範囲内に収まるように調整 (ループさせる)
+            if (newIndex >= imagePaths.length) {
+                newIndex = 0; 
+            } else if (newIndex < 0) {
+                newIndex = imagePaths.length - 1; 
+            }
+
+            currentIndex = newIndex;
+            characterImage.src = imagePaths[currentIndex];
+        }
+
+        // 「前へ」ボタンのイベントリスナー
+        prevButton.addEventListener('click', () => {
+            changeImage(currentIndex - 1);
+        });
+
+        // 「次へ」ボタンのイベントリスナー
+        nextButton.addEventListener('click', () => {
+            changeImage(currentIndex + 1);
+        });
+    }
+
+    // 💡 他の既存のJavaScript機能があればここに続く
+    
+    // 例: ハンバーガーメニューの開閉機能（元のHTMLに記述されていたため）
+    const hamburger = document.querySelector('.hamburger-menu');
+    const sideMenu = document.querySelector('.side-menu');
+
+    if (hamburger && sideMenu) {
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('is-open');
+            sideMenu.classList.toggle('is-open');
+        });
+
+        // メニュー項目をクリックしたらメニューを閉じる（SPAっぽい動作を意識）
+        const menuLinks = sideMenu.querySelectorAll('a');
+        menuLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('is-open');
+                sideMenu.classList.remove('is-open');
+            });
+        });
+    }
+});
