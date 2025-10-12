@@ -89,7 +89,7 @@ document.addEventListener("DOMContentLoaded", function () {
       },
       koharu: {
         normal: "image/koharu_w.png",
-        clicked: "image/koharu_w.png",
+        clicked: "image/koharu_click.png",
       },
     };
 
