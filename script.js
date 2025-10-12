@@ -3,17 +3,19 @@ document.addEventListener("DOMContentLoaded", function () {
   // 共通機能
   // ----------------------------------------------------
 
-  // ハンバーガーメニュー
+  // ハンバーガーメニューの開閉機能 (統合)
   const hamburgerMenu = document.querySelector(".hamburger-menu");
   const sideMenu = document.querySelector(".side-menu");
 
   if (hamburgerMenu && sideMenu) {
     // 要素が存在する場合のみ実行
     hamburgerMenu.addEventListener("click", function () {
+      // is-active と is-open の両方をトグル（元の is-active ロジックを優先）
       hamburgerMenu.classList.toggle("is-active");
       sideMenu.classList.toggle("is-open");
     });
 
+    // メニュー項目をクリックしたらメニューを閉じる
     const sideMenuItems = sideMenu.querySelectorAll("a");
     sideMenuItems.forEach((item) => {
       item.addEventListener("click", function () {
@@ -22,7 +24,9 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     });
 
+    // リサイズ時にメニューを閉じる
     window.addEventListener("resize", function () {
+      // 画面幅が768pxを超えたら強制的に閉じる (CSSのブレイクポイントと合わせることを推奨)
       if (sideMenu.classList.contains("is-open") && window.innerWidth > 768) {
         hamburgerMenu.classList.remove("is-active");
         sideMenu.classList.remove("is-open");
@@ -32,7 +36,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // ----------------------------------------------------
   // キャラクターページ（またはTOPページ）専用機能
-  // ※ welcomeImg, welcomeText が存在するページでのみ実行
   // ----------------------------------------------------
   const welcomeImg = document.getElementById("welcomeImg");
   const welcomeText = document.getElementById("welcomeText");
@@ -68,8 +71,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const images = {
       gogotaro: {
-        normal: "image/gogotaro_w.png",
-        clicked: "image/gogotaro_click.png",
+        normal: "gogotaro_w.png", // HTML側でパスが合っているか確認してください
+        clicked: "gogotaro_click.png",
       },
       nemutaro: {
         normal: "image/nemutaro_w.png",
@@ -122,7 +125,10 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     currentChar = pickRandomChar(); // DOMContentLoadedイベント内なので、ここで実行
-    showMessage("normal");
+    // 注意: HTMLで "gogotaro_w.png" のパスが指定されていない場合、ここは失敗する可能性があります
+    // HTMLのimgタグのsrc属性を "image/gogotaro_w.png" に修正するか、
+    // 上記 images オブジェクトの gogotaro のパスを修正してください。
+    showMessage("normal"); 
 
     welcomeImg.parentElement.addEventListener("click", () => {
       showMessage("clicked");
@@ -135,7 +141,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // ----------------------------------------------------
   // ギャラリーページ専用機能
-  // ※ modal, galleryItems などが存在するページでのみ実行
   // ----------------------------------------------------
   const modal = document.getElementById("modal");
   const modalImg = document.getElementById("modalImg");
@@ -203,7 +208,7 @@ document.addEventListener("DOMContentLoaded", function () {
     searchInput.addEventListener("input", () => {
       const query = searchInput.value.trim().toLowerCase();
       galleryItems.forEach(item => {
-        const chars = item.dataset.characters.toLowerCase();
+        const chars = item.dataset.characters ? item.dataset.characters.toLowerCase() : "";
         if (chars.includes(query)) {
           item.style.display = "";
         } else {
@@ -227,8 +232,8 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   } // if (modal && ...) の閉じ括弧
 
-// ----------------------------------------------------
-  // 日記ページ専用機能 (diaryList が存在するページでのみ実行)
+  // ----------------------------------------------------
+  // 日記ページ専用機能
   // ----------------------------------------------------
   const diaryList = document.querySelector(".diary-list");
   if (diaryList) {
@@ -270,17 +275,13 @@ document.addEventListener("DOMContentLoaded", function () {
       img.alt = diary.alt; // alt属性にテキストを設定します
       img.className = "diary-image";
 
-      // ★ここを修正します！ <p>タグの生成と追加を削除します。
-      // const p = document.createElement("p");
-      // p.textContent = diary.text;
-
       a.appendChild(img);
-      // a.appendChild(p); // <p>タグの追加も削除
       diaryList.appendChild(a);
 
       // ロックされている日記カードにイベントリスナーを設定
       if (diary.isLocked) {
-        a.addEventListener("click", () => {
+        a.addEventListener("click", (e) => {
+          e.preventDefault(); // リンクへの遷移を防ぐ
           const passwordOverlay = document.getElementById("passwordOverlay");
           const passwordInput = document.getElementById("passwordInput");
           const errorText = document.getElementById("errorText");
@@ -315,9 +316,8 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // ----------------------------------------------------
-  // diary.html 用のパスワードモーダル (script.js 内に移動・整理)
+  // diary.html 用のパスワードモーダル
   // ----------------------------------------------------
-  // 注: lockedDiary のクリックイベントはdiaryListのforEach内で設定される
   const passwordOverlay = document.getElementById("passwordOverlay");
   const closePasswordPopup = document.getElementById("closePasswordPopup");
   const checkPassword = document.getElementById("checkPassword");
@@ -354,77 +354,55 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
   }
-}); // ★DOMContentLoaded の閉じ括弧はここが最後！
+  
+  // ----------------------------------------------------
+  // キャラクター画像切り替え機能 (元々2番目のDOMContentLoaded内にあった機能)
+  // ----------------------------------------------------
+  const characterImage = document.getElementById('character-image');
+  const prevButton = document.getElementById('prev-image');
+  const nextButton = document.getElementById('next-image');
+  const imagePathsElement = document.getElementById('image-paths');
 
-document.addEventListener('DOMContentLoaded', () => {
-    // 💡 追記: キャラクター画像切り替え機能
-    const characterImage = document.getElementById('character-image');
-    const prevButton = document.getElementById('prev-image');
-    const nextButton = document.getElementById('next-image');
-    const imagePathsElement = document.getElementById('image-paths');
+  if (characterImage && prevButton && nextButton && imagePathsElement) {
+      // data-paths属性から画像パスの配列を取得
+      let imagePaths;
+      try {
+          imagePaths = JSON.parse(imagePathsElement.dataset.paths);
+      } catch (e) {
+          console.error('画像パスのパースに失敗しました:', e);
+          imagePaths = [];
+      }
 
-    if (characterImage && prevButton && nextButton && imagePathsElement) {
-        // data-paths属性から画像パスの配列を取得
-        let imagePaths;
-        try {
-            imagePaths = JSON.parse(imagePathsElement.dataset.paths);
-        } catch (e) {
-            console.error('画像パスのパースに失敗しました:', e);
-            imagePaths = [];
-        }
+      // 画像が1枚以下の場合はボタンを非表示にする
+      if (imagePaths.length <= 1) {
+          if (prevButton) prevButton.style.display = 'none';
+          if (nextButton) nextButton.style.display = 'none';
+          return;
+      }
 
-        // 画像が1枚以下の場合はボタンを非表示にする
-        if (imagePaths.length <= 1) {
-            prevButton.style.display = 'none';
-            nextButton.style.display = 'none';
-            return;
-        }
+      let currentIndex = 0; // 現在表示されている画像のインデックス（0からスタート）
 
-        let currentIndex = 0; // 現在表示されている画像のインデックス（0からスタート）
+      // 画像を切り替える関数
+      function changeImage(newIndex) {
+          // インデックスが配列の範囲内に収まるように調整 (ループさせる)
+          if (newIndex >= imagePaths.length) {
+              newIndex = 0; 
+          } else if (newIndex < 0) {
+              newIndex = imagePaths.length - 1; 
+          }
 
-        // 画像を切り替える関数
-        function changeImage(newIndex) {
-            // インデックスが配列の範囲内に収まるように調整 (ループさせる)
-            if (newIndex >= imagePaths.length) {
-                newIndex = 0; 
-            } else if (newIndex < 0) {
-                newIndex = imagePaths.length - 1; 
-            }
+          currentIndex = newIndex;
+          characterImage.src = imagePaths[currentIndex];
+      }
 
-            currentIndex = newIndex;
-            characterImage.src = imagePaths[currentIndex];
-        }
+      // 「前へ」ボタンのイベントリスナー
+      prevButton.addEventListener('click', () => {
+          changeImage(currentIndex - 1);
+      });
 
-        // 「前へ」ボタンのイベントリスナー
-        prevButton.addEventListener('click', () => {
-            changeImage(currentIndex - 1);
-        });
-
-        // 「次へ」ボタンのイベントリスナー
-        nextButton.addEventListener('click', () => {
-            changeImage(currentIndex + 1);
-        });
-    }
-
-    // 💡 他の既存のJavaScript機能があればここに続く
-    
-    // 例: ハンバーガーメニューの開閉機能（元のHTMLに記述されていたため）
-    const hamburger = document.querySelector('.hamburger-menu');
-    const sideMenu = document.querySelector('.side-menu');
-
-    if (hamburger && sideMenu) {
-        hamburger.addEventListener('click', () => {
-            hamburger.classList.toggle('is-open');
-            sideMenu.classList.toggle('is-open');
-        });
-
-        // メニュー項目をクリックしたらメニューを閉じる（SPAっぽい動作を意識）
-        const menuLinks = sideMenu.querySelectorAll('a');
-        menuLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                hamburger.classList.remove('is-open');
-                sideMenu.classList.remove('is-open');
-            });
-        });
-    }
-});
+      // 「次へ」ボタンのイベントリスナー
+      nextButton.addEventListener('click', () => {
+          changeImage(currentIndex + 1);
+      });
+  }
+}); // DOMContentLoaded の閉じ括弧はここが最後
