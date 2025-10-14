@@ -71,8 +71,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const images = {
       gogotaro: {
-        normal: "gogotaro_w.png", // HTML側でパスが合っているか確認してください
-        clicked: "gogotaro_click.png",
+        normal: "image/gogotaro_w.png", // HTML側でパスが合っているか確認してください
+        clicked: "image/gogotaro_click.png",
       },
       nemutaro: {
         normal: "image/nemutaro_w.png",
